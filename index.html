@@ -5,7 +5,6 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Tic Tac Toe</title>
-    <link rel="stylesheet" href="style.css">
 </head>
 <body>
     <h1>Tic Tac Toe</h1>
@@ -27,96 +26,5 @@
         </div>
     </div>
     <button id="reset-button">Reset Game</button>
-
-    <script src="script.js"></script>
 </body>
 </html>
-
-
-CSS (in style.css file)
-
-
-.game-board {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-}
-
-.row {
-    display: flex;
-}
-
-.cell {
-    width: 50px;
-    height: 50px;
-    border: 1px solid #000;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    font-size: 24px;
-    cursor: pointer;
-}
-
-.cell:hover {
-    background-color: #ccc;
-}
-
-
-JavaScript (in script.js file)
-
-
-let gameBoard = ['', '', '', '', '', '', '', '', ''];
-let currentPlayer = 'X';
-let gameOver = false;
-
-const cellElements = document.querySelectorAll('.cell');
-const resetButton = document.getElementById('reset-button');
-
-cellElements.forEach((cell, index) => {
-    cell.addEventListener('click', () => {
-        if (gameOver) return;
-        if (gameBoard[index] !== '') return;
-
-        gameBoard[index] = currentPlayer;
-        cell.textContent = currentPlayer;
-
-        checkForWin();
-        currentPlayer = currentPlayer === 'X' ? 'O' : 'X';
-    });
-});
-
-resetButton.addEventListener('click', resetGame);
-
-function checkForWin() {
-    const winConditions = [
-        [0, 1, 2],
-        [3, 4, 5],
-        [6, 7, 8],
-        [0, 3, 6],
-        [1, 4, 7],
-        [2, 5, 8],
-        [0, 4, 8],
-        [2, 4, 6],
-    ];
-
-    for (const condition of winConditions) {
-        if (
-            gameBoard[condition[0]] !== '' &&
-            gameBoard[condition[0]] === gameBoard[condition[1]] &&
-            gameBoard[condition[0]] === gameBoard[condition[2]]
-        ) {
-            gameOver = true;
-            alert(`Player ${gameBoard[condition[0]]} wins!`);
-        }
-    }
-}
-
-function resetGame() {
-    gameBoard = ['', '', '', '', '', '', '', '', ''];
-    currentPlayer = 'X';
-    gameOver = false;
-
-    cellElements.forEach((cell) => {
-        cell.textContent = '';
-    });
-}
